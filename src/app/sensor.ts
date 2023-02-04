@@ -5,5 +5,8 @@ export interface Sensor {
     label: string;
     parent?: Sensor;
     value: number;
+    unit: string;
     sensitivity: number;
+    timestamp?: number;
+    coords?: number[]
 }

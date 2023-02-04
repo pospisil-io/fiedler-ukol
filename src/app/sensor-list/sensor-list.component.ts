@@ -21,10 +21,26 @@ export class SensorListComponent {
       return sum + value;
     }, 0)
   }
-  checkboxSelect = (sensor: Sensor) => {
-    if(this.selectedSensors.indexOf(sensor) === -1){
+  selectNone = () => {
+    this.selectedSensors = []
+  }
+  selectAll = () => {
+    this.selectNone()
+    this.sensors.forEach(sensor => {
       this.selectedSensors.push(sensor)
-    }else{
+    });
+  }
+  checkboxSelect = (sensor: Sensor) => {
+    if (this.selectedSensors.indexOf(sensor) === -1) {
+      this.selectedSensors.push(sensor)
+    } else {
+      if(this.selectedSensors.length === 0 && this.selectedSensors.every((item) => {
+        item.parent === this.selectedSensors[0].parent
+      })){
+        this.batchParent = sensor.parent
+      }else{
+        this.batchParent = undefined
+      }
       this.selectedSensors.splice(this.selectedSensors.indexOf(sensor), 1)
     }
   }
@@ -33,5 +49,8 @@ export class SensorListComponent {
     selected.forEach((item) => {
       item.parent = parent
     })
+  }
+  hasParentInSelected = (sensor: Sensor) => {
+    return this.selectedSensors.some((item) => { return sensor.parent === item})
   }
 }

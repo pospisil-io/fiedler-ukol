@@ -1,10 +1,12 @@
 <h2>{{listTitle}}</h2>
+zvolit <button (click)="selectAll()">vse</button> / <button (click)="selectNone()">nic</button>
+
 filtrovat:
 <input type="search" [(ngModel)]="searchString" placeholder="zadejte text">
 <hr>
 <table>
     <tr>
-        <th>upravit</th>
+        <th><input type="checkbox" disabled checked></th>
         <th>id</th>
         <th>oznaceni</th>
         <th>nadrazeny senzor</th>
@@ -22,17 +24,18 @@ filtrovat:
             <!-- <input *ngIf="sensor.parent" [(ngModel)]="sensor.parent.label" placeholder="nadrazeny senzor"> -->
             <select [(ngModel)]="sensor.parent">
                 <option [ngValue]="undefined">nezadano</option>
-                <option *ngFor="let item of sensors" [ngValue]="item" [disabled]="item === sensor || item.parent === sensor">{{item.label}}</option>
+                <option *ngFor="let item of sensors" [ngValue]="item"
+                    [disabled]="item === sensor || item.parent === sensor">{{item.label}}</option>
             </select>
         </td>
         <td>
             <span
                 [ngClass]="(sensor.value < 7 ? 'value-good' : (sensor.value < 9 ? 'value-warn' : 'value-critical'))">{{sensor.value
                 | number}}
-                &plusmn; {{sensor.sensitivity}}</span>
+                &plusmn; {{sensor.sensitivity}} {{sensor.unit}}</span>
         </td>
         <td>
-            <span>{{sumOfChildren(sensor) | number}}</span>
+            <span>{{sumOfChildren(sensor) | number}} {{sensor.unit}}</span>
         </td>
     </tr>
 </table>
@@ -42,10 +45,13 @@ filtrovat:
     <div *ngIf="selectedSensors.length === 0">Prosim zvolte senzor k uprave</div>
     <div *ngIf="selectedSensors.length > 0">
         <span *ngFor="let item of selectedSensors" class="sensor-label">{{item.label}},</span>
+        <input *ngIf="selectedSensors.length === 1" [(ngModel)]="selectedSensors[0].label">
         <br>
         <select [(ngModel)]="batchParent" (change)="setBatchParent(selectedSensors, batchParent)">
             <option [ngValue]="undefined">nezadano</option>
-            <option *ngFor="let item of sensors" [ngValue]="item" [disabled]="selectedSensors.indexOf(item) > -1">{{item.label}}</option>
+            <option *ngFor="let item of sensors" [ngValue]="item"
+                [disabled]="selectedSensors.indexOf(item) > -1 || hasParentInSelected(item)">
+                {{item.label}}</option>
         </select>
     </div>
 </div>
