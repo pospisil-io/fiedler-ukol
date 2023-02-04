@@ -10,3 +10,23 @@ li button:hover {
 li input[type=number] {
     width: 3em;
 }
+.value-good{
+    color: green;
+}
+.value-warn{
+    color: orange;
+}
+.value-critical{
+    color: red;
+    font-weight: bold;
+}
+.sensor-id{
+    color: #777;
+}
+.sensor-label{
+    font-weight: bold;
+}
+option[disabled]{
+    color: black;
+    text-decoration: line-through;
+}

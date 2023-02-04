@@ -1,8 +1,9 @@
-import { SensorGroup } from "./sensor-group";
+// import { SensorGroup } from "./sensor-group";
 
 export interface Sensor {
-    id: number;
+    id: string;
     label: string;
-    group?: SensorGroup;
+    parent?: Sensor;
     value: number;
+    sensitivity: number;
 }

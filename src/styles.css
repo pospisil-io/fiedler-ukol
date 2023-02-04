@@ -1,20 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
 body {
-    background-color: #abc;
+    background-color: #222;
 }
 
 h1 {
-    color: #333;
+    color: #aaa;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 250%;
 }
 
 input {
     border: 0;
-    border-bottom: 1px solid black;
-    background-color: #cdf;
+    border-bottom: 1px solid #777;
+    background-color: #333;
+}
+button{
+    background-color: #333;
+}
+select{
+    background-color: #333;
 }
 
 * {
+    color: #ddd;
     font-family: Arial, Helvetica, sans-serif;
 }
