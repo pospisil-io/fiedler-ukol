@@ -1,0 +1,19 @@
+<h2>{{listTitle}}</h2>
+<ul>
+    <li *ngFor="let sensor of sensors">
+        <input [(ngModel)]="sensor.label" placeholder="oznaceni"> value: {{sensor.value}}
+        group:
+        <select [(ngModel)]="sensor.group" (ngModelChange)="placeSensor($event, sensor)">
+            <option *ngFor="let group of sensorGroups" [ngValue]="group">{{group.label}}</option>
+        </select>
+        <button>hlavni</button>
+    </li>
+</ul>
+<hr>
+<ul>
+    <li *ngFor="let group of sensorGroups">
+        <input [(ngModel)]="group.label" placeholder="oznaceni">
+        members: {{group.members.length}}
+        (<span *ngFor="let member of group.members">{{member.label}},</span>)
+    </li>
+</ul>

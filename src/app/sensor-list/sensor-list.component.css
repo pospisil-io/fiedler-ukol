@@ -1,0 +1,12 @@
+li button {
+    text-decoration: line-through;
+}
+li button.hlavni {
+    text-decoration: none;
+}
+li button:hover {
+    font-weight: bold;
+}
+li input[type=number] {
+    width: 3em;
+}
