@@ -1,57 +1,12 @@
-<h2>{{listTitle}}</h2>
-zvolit <button (click)="selectAll()">vse</button> / <button (click)="selectNone()">nic</button>
-
-filtrovat:
-<input type="search" [(ngModel)]="searchString" placeholder="zadejte text">
-<hr>
-<table>
-    <tr>
-        <th><input type="checkbox" disabled checked></th>
-        <th>id</th>
-        <th>oznaceni</th>
-        <th>nadrazeny senzor</th>
-        <th>hodnota senzoru</th>
-        <th>hodnota podrazenych senzoru</th>
-    </tr>
-    <tr *ngFor="let sensor of sensors | filter: searchString;">
-        <td>
-            <!-- <button (click)="selectedSensors = [sensor]">edit</button> -->
-            <input type="checkbox" [checked]="selectedSensors.indexOf(sensor) > -1" (click)="checkboxSelect(sensor)">
-        </td>
-        <td>{{sensor.id}}</td>
-        <td><input [(ngModel)]="sensor.label" placeholder="oznaceni"></td>
-        <td>
-            <!-- <input *ngIf="sensor.parent" [(ngModel)]="sensor.parent.label" placeholder="nadrazeny senzor"> -->
-            <select [(ngModel)]="sensor.parent">
-                <option [ngValue]="undefined">nezadano</option>
-                <option *ngFor="let item of sensors" [ngValue]="item"
-                    [disabled]="item === sensor || item.parent === sensor">{{item.label}}</option>
-            </select>
-        </td>
-        <td>
-            <span
-                [ngClass]="(sensor.value < 7 ? 'value-good' : (sensor.value < 9 ? 'value-warn' : 'value-critical'))">{{sensor.value
-                | number}}
-                &plusmn; {{sensor.sensitivity}} {{sensor.unit}}</span>
-        </td>
-        <td>
-            <span>{{sumOfChildren(sensor) | number}} {{sensor.unit}}</span>
-        </td>
-    </tr>
-</table>
-<hr>
-<div>
-    Detaily: <button *ngIf="selectedSensors.length > 0" (click)="selectedSensors=[]">clear selection</button>
-    <div *ngIf="selectedSensors.length === 0">Prosim zvolte senzor k uprave</div>
+<div class="container">
+    <input type="search" [(ngModel)]="searchString" placeholder="zadejte text">
+    <pre *ngIf="false">{{groups | json}}</pre>
+    zvolit <button (click)="selectAll()">vse</button> / <button (click)="selectNone()">nic</button>
+    priradit skupine: <select [(ngModel)]="selectedGroup" (change)="assignToGroup()">
+        <option *ngFor="let group of groups" [ngValue]="group">{{group.label}}</option>
+    </select>
     <div *ngIf="selectedSensors.length > 0">
-        <span *ngFor="let item of selectedSensors" class="sensor-label">{{item.label}},</span>
-        <input *ngIf="selectedSensors.length === 1" [(ngModel)]="selectedSensors[0].label">
-        <br>
-        <select [(ngModel)]="batchParent" (change)="setBatchParent(selectedSensors, batchParent)">
-            <option [ngValue]="undefined">nezadano</option>
-            <option *ngFor="let item of sensors" [ngValue]="item"
-                [disabled]="selectedSensors.indexOf(item) > -1 || hasParentInSelected(item)">
-                {{item.label}}</option>
-        </select>
+        prejmenovat: <input type="text" *ngIf="selectedSensors.length === 1" [(ngModel)]="selectedSensors[0].label">
     </div>
+    <app-sensor *ngFor="let sensor of sensors | filter: searchString" [sensors]="sensors" [sensor]="sensor" [(selectedSensors)]="selectedSensors"></app-sensor>
 </div>

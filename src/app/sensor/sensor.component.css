@@ -1,0 +1,35 @@
+.container {
+    overflow: hidden;
+    border-radius: 2px;
+    color: #222;
+    background-color: lightgray;
+    margin: 2px;
+    padding: 4px;
+}
+.checkbox{
+    grid-area: checkbox;
+}
+.label {
+    grid-area: label;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.id{
+    color: black;
+    font-size: .8em;
+    text-align: center;
+    background-color: gray;
+    border-radius: .5em;
+    padding: .5em;
+    width: 100px;
+}
+
+.value {
+    grid-area: value;
+    text-align: right;
+    font-weight: bold;
+}
+.timestamp{
+    grid-area: timestamp;
+    text-align: right;
+}

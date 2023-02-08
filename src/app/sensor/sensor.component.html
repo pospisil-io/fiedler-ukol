@@ -1,0 +1,4 @@
+<div class="container" [class.selected]="selectedSensors.indexOf(sensor) > -1">
+    <input class="checkbox" type="checkbox" [checked]="selectedSensors.indexOf(sensor) > -1" (click)="checkboxSelect(sensor)">
+    {{sensor.label}} ({{sensor.id}}) - {{sensor.value}} {{sensor.unit}}
+</div>

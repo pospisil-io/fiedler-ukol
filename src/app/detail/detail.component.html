@@ -1,0 +1,29 @@
+<div class="container">
+    <div *ngIf="selectedSensors.length === 0">Prosim zvolte senzor k uprave</div>
+    <div *ngIf="selectedSensors.length > 0">
+        <span *ngFor="let item of selectedSensors" class="sensor-label">{{item.label}},</span>
+        <input *ngIf="selectedSensors.length === 1" [(ngModel)]="selectedSensors[0].label">
+        <br>
+        parent: <select [(ngModel)]="batchParent" (change)="null">
+            <option [ngValue]="undefined">nezadano</option>
+            <option *ngFor="let item of sensors" [ngValue]="item"
+                [disabled]="selectedSensors.indexOf(item) > -1 || false">
+                {{item.label}}</option>
+        </select>
+    </div>
+</div>
+
+<!-- <div class="container">
+    <div *ngIf="selectedSensors.length === 0">Prosim zvolte senzor k uprave</div>
+    <div *ngIf="selectedSensors.length > 0">
+        <span *ngFor="let item of selectedSensors" class="sensor-label">{{item.label}},</span>
+        <input *ngIf="selectedSensors.length === 1" [(ngModel)]="selectedSensors[0].label">
+        <br>
+        parent: <select [(ngModel)]="batchParent" (change)="setBatchParent(selectedSensors, batchParent)">
+            <option [ngValue]="undefined">nezadano</option>
+            <option *ngFor="let item of sensors" [ngValue]="item"
+                [disabled]="selectedSensors.indexOf(item) > -1 || hasParentInSelected(item)">
+                {{item.label}}</option>
+        </select>
+    </div>
+</div> -->

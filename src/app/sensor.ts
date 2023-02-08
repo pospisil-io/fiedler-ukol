@@ -1,12 +1,10 @@
-// import { SensorGroup } from "./sensor-group";
+import { Gps } from "./gps";
 
 export interface Sensor {
-    id: string;
+    id: number;
     label: string;
-    parent?: Sensor;
     value: number;
     unit: string;
-    sensitivity: number;
-    timestamp?: number;
-    coords?: number[]
+    timestamp: number;
+    coords: Gps;
 }

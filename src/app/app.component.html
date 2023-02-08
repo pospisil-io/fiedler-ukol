@@ -1,4 +1,5 @@
-<div>
-  <h1>{{title}}</h1>
-  <app-sensor-list></app-sensor-list>
+<div class="container">
+  <div class="head">{{title}}</div>
+  <app-sensor-list [groups]="groups" [(sensors)]="sensors" (selectedSensorsChange)="selectedSensors=$event"></app-sensor-list>
+  <app-group-list [(groups)]="groups" [(sensors)]="sensors" [selectedSensors]="selectedSensors"></app-group-list>
 </div>

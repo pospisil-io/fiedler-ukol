@@ -1,0 +1,4 @@
+<div class="container">
+    <input type="search" [(ngModel)]="searchString" placeholder="zadejte text">
+    <app-group *ngFor="let group of groups | filter: searchString" [groups]="groups" [group]="group" [sensors]="sensors" [selectedSensors]="selectedSensors"></app-group>
+</div>

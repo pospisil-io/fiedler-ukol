@@ -1,0 +1,15 @@
+<div class="container">
+    <span class="label">{{group.label}}</span>
+    <span class="value">
+        {{group.main?.value | number}} {{group.main?.unit}}<br>
+        <select [(ngModel)]="group.main">
+            <option *ngFor="let item of group.sensors" [ngValue]="item">{{item.label}}</option>
+        </select>
+    </span>
+    <div class="tolerance">tolerance:
+        hodnota: <input class="tolerance" type="number" [(ngModel)]="group.toleranceValue"> cas: <input class="tolerance" type="number" [(ngModel)]="group.toleranceTime">
+    </div>
+    <div class="sensors">
+        <span class="sensors" *ngFor="let sensor of group.sensors">{{sensor.id}}</span>
+    </div>
+</div>

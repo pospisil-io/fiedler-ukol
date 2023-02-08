@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Sensor } from '../sensor';
-import { SENSORS } from '../mock-sensors';
-import { SensorListRecord } from '../sensor-list-record';
-import { SensorState } from '../sensor-state';
+import { Group } from '../group';
+import { SensorService } from '../sensor.service';
 
 @Component({
   selector: 'app-sensor-list',
@@ -10,47 +9,40 @@ import { SensorState } from '../sensor-state';
   styleUrls: ['./sensor-list.component.css']
 })
 export class SensorListComponent {
+  constructor(private sensorService: SensorService) { }
+
   listTitle = 'Seznam senzoru';
-  searchString: string = ''
+
+  @Input() searchString!: string;
+
+  selectedGroup: Group | undefined
+
   selectedSensors: Sensor[] = [];
-  sensors = SENSORS
-  sumOfChildren = (parent: Sensor) => {
-    return this.sensors.filter((item) => {
-      return item.parent === parent
-    }).map((item) => { return item.value }).reduce((sum, value) => {
-      return sum + value;
-    }, 0)
+  @Output() selectedSensorsChange = new EventEmitter<Sensor[]>();
+
+  @Input() sensors: Sensor[] = [];
+  @Output() sensorsChange = new EventEmitter<Sensor[]>();
+
+  @Input() groups: Group[] = [];
+  @Output() groupsChange = new EventEmitter<Group[]>();
+
+  ngOnChanges(){
+    this.selectedSensorsChange.emit(this.selectedSensors)
   }
-  selectNone = () => {
+
+  selectNone() {
     this.selectedSensors = []
+    this.selectedSensorsChange.emit(this.selectedSensors)
   }
-  selectAll = () => {
+  selectAll() {
     this.selectNone()
     this.sensors.forEach(sensor => {
       this.selectedSensors.push(sensor)
     });
+    this.selectedSensorsChange.emit(this.selectedSensors)
   }
-  checkboxSelect = (sensor: Sensor) => {
-    if (this.selectedSensors.indexOf(sensor) === -1) {
-      this.selectedSensors.push(sensor)
-    } else {
-      if(this.selectedSensors.length === 0 && this.selectedSensors.every((item) => {
-        item.parent === this.selectedSensors[0].parent
-      })){
-        this.batchParent = sensor.parent
-      }else{
-        this.batchParent = undefined
-      }
-      this.selectedSensors.splice(this.selectedSensors.indexOf(sensor), 1)
-    }
-  }
-  batchParent: Sensor | undefined = undefined;
-  setBatchParent = (selected: Sensor[], parent: Sensor | undefined) => {
-    selected.forEach((item) => {
-      item.parent = parent
-    })
-  }
-  hasParentInSelected = (sensor: Sensor) => {
-    return this.selectedSensors.some((item) => { return sensor.parent === item})
+
+  assignToGroup(){
+    if(this.selectedGroup) this.selectedGroup.sensors = this.selectedSensors
   }
 }
